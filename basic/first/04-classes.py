@@ -24,7 +24,7 @@ john = User("John", "Doe")
 # john.first_name = "John"
 
 artur = User("Artur", "Doe")
-artur.first_name = "Artur"
+# artur.first_name = "Artur"
 
 # print(john.first_name, john.last_name)
 # print(artur.first_name, artur.last_name)

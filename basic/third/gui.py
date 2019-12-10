@@ -12,7 +12,7 @@
 #  Пример простой формы на PyQt 5 с обработчиками
 #
 #  1. pip install PyQt5 - установка пакета
-#  2. pip install PyQt5-stubs - посказки
+#  2. pip install PyQt5-stubs - подсказки
 #  3. pip install qt5reactor - установка пакета
 #  4. from PyQt5 import QtWidgets - подключить в файле .py
 #

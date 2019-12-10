@@ -23,12 +23,6 @@ pip list
 pip freeze > requirements.txt
 ```
 
-Для работы на Windows еще может понадобиться пакет `pywin32`
-
-```
-pip install pywin32
-```
-
 Для установки Telnet
 
 MacOS:
@@ -53,6 +47,8 @@ Windows: [инструкция](https://help.keenetic.com/hc/ru/articles/2139658
     - Установить.
     - Перезагрузить компьютер
     - Повторить установку пакетов `pip install -r requirements.txt`
+
+(за вклад спасибо [NickCoolii](https://github.com/NickCoolii))
 
 ## Структура репозитория
 

@@ -26,6 +26,6 @@ class EchoFactory(protocol.Factory):
         return Echo()
 
 
-endpoints.serverFromString(reactor, "tcp:65000").listen(EchoFactory())
+# если проблема с запуском сервера, то попробуйте сменить порт (1234) на случайный, например 65000
+endpoints.serverFromString(reactor, "tcp:1234").listen(EchoFactory())
 reactor.run()
-print("You are here")

@@ -23,7 +23,7 @@ class User:
         print("I have no age")
 
 
-class AgedUsed(User):
+class AgedUser(User):
     __age: int
 
     def __init__(self, first_name, last_name, age):
@@ -40,7 +40,7 @@ class AgedUsed(User):
 unaged_artur = User("Artur", "Doe")
 unaged_artur.show_age()
 
-aged_john = AgedUsed("John", "Doe", 42)
+aged_john = AgedUser("John", "Doe", 42)
 # aged_john.age = 32
 # print(aged_john.full_name())
 
