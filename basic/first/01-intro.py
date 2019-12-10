@@ -30,4 +30,3 @@ print(a_greater_than_b)
 
 coords = [1, 2.406]
 print(coords[1])
-
