@@ -41,7 +41,7 @@ unaged_artur = User("Artur", "Doe")
 unaged_artur.show_age()
 
 aged_john = AgedUser("John", "Doe", 42)
-# aged_john.age = 32
+# aged_john.__age = 32
 # print(aged_john.full_name())
 
 aged_john.show_age()
