@@ -45,7 +45,7 @@ Windows: [инструкция](https://help.keenetic.com/hc/ru/articles/2139658
 
 ## Возожные проблемы
 
-### Проблема установки PyQt5-sip (Windows)
+### Проблема установки библиотек twisted/PyQt5-sip в PyCharm (Windows)
 
 - Необходимо установить С++ build tools
     - [Объяснение](https://stackoverflow.com/a/40525033/4941870)
