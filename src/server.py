@@ -68,7 +68,7 @@ class ServerProtocol(LineOnlyReceiver):
 
             content = f"{self.login} said: {content}"
 
-            self.update_history(content)
+            self.factory.update_history(content)
             if self.__debug:
                 print(content)
 
@@ -119,12 +119,6 @@ class ServerProtocol(LineOnlyReceiver):
             for message in self.factory.latest_messages:
                 self.sendLine(message.encode())
 
-    def update_history(self, message):
-        if len(self.factory.latest_messages) >= 10:
-            self.factory.latest_messages.pop(0)
-
-        self.factory.latest_messages.append(message)
-
     def fix_users_first_line_telnet_at_win(self):
         delimiter = self.delimiter
         self.delimiter = b""
@@ -148,14 +142,21 @@ class ServerProtocol(LineOnlyReceiver):
 class Server(ServerFactory):
     protocol = ServerProtocol
     clients: list = []
-    restricted_logins: list = ['admin', 'anonymous']
     latest_messages: list = []
+    max_count_of_history_messages = 10
+    restricted_logins: list = ['admin', 'anonymous']
 
     def startFactory(self):
         print("Server started")
 
     def stopFactory(self):
         print("Server closed")
+
+    def update_history(self, message):
+        if len(self.latest_messages) >= self.max_count_of_history_messages:
+            self.latest_messages.pop(0)
+
+        self.latest_messages.append(message)
 
 
 reactor.listenTCP(65000, Server())

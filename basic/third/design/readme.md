@@ -2,6 +2,7 @@
 
 ```
 pyuic5 window.ui -o window.py
+pyuic5 design.ui -o design.py
 ```
 
 Для быстрого создания приложения с загрузкой дизайна, используем пример:
