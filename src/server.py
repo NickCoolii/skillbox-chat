@@ -12,7 +12,6 @@
 # fixed first user massage bug (invisible letters) for Windows default telnet
 #
 from concurrent.futures.thread import ThreadPoolExecutor
-
 from twisted.internet import reactor
 from twisted.internet.protocol import ServerFactory, connectionDone
 from twisted.protocols.basic import LineOnlyReceiver
@@ -51,6 +50,9 @@ class ServerProtocol(LineOnlyReceiver):
             if len(content) < 1:
                 return
 
+            if content.lower() == "die":
+                reactor.stop()
+
             content = f"{self.login} said: {content}"
 
             self.update_history(content)
@@ -62,8 +64,6 @@ class ServerProtocol(LineOnlyReceiver):
                     user.sendLine(content.encode())
 
             with ThreadPoolExecutor(max_workers=20) as pool:
-                # for user in self.factory.clients:
-                #     if user is not self and user.login is not None:
                 pool.map(send_message, self.factory.clients)
 
             # for user in self.factory.clients:
@@ -133,7 +133,7 @@ class ServerProtocol(LineOnlyReceiver):
 
 class Server(ServerFactory):
     protocol = ServerProtocol
-    clients: list
+    clients: list = []
     restricted_logins: list = ['admin', 'anonymous']
     latest_messages: list = []
 
