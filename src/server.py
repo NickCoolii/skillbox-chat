@@ -10,6 +10,11 @@
 # if user login is restricted - lose connection
 # if user login already in use - give another try
 # fixed first user massage bug (invisible letters) for Windows default telnet
+# anonymous users see no chat messages of users that has login
+# if user with login send "die" - he kicks from server with notifying other users
+# kick counter for quick senders
+# history
+# print messages with __debug of ServerProtocol
 #
 from concurrent.futures.thread import ThreadPoolExecutor
 from twisted.internet import reactor
@@ -27,18 +32,22 @@ class ServerProtocol(LineOnlyReceiver):
 
     def connectionMade(self):
         self.factory.clients.append(self)
-        self.fix_my_first_line()
+        self.fix_users_first_line_telnet_at_win()
 
     def connectionLost(self, reason=connectionDone):
         self.factory.clients.remove(self)
 
     def lineReceived(self, line: bytes):
-        try:
-            content = line.decode()
-        except UnicodeDecodeError:
-            self.sendLine("Sorry, but I don't understand you. This language/locale is not an option. In English, "
-                          "please! ".encode())
-            return
+        def send_message(user):
+            if user is not self and user.login is not None:
+                user.sendLine(content.encode())
+
+        # try:
+        content = line.decode(errors="ignore")
+        # except UnicodeDecodeError:
+        #     self.sendLine("Sorry, but I don't understand you. This language/locale is not an option. In English, "
+        #                   "please! ".encode())
+        #     return
 
         if self.is_often_messaging():
             self.sendLine("Not so fast. All your base are belong to us…".encode())
@@ -51,17 +60,17 @@ class ServerProtocol(LineOnlyReceiver):
                 return
 
             if content.lower() == "die":
-                reactor.stop()
+                self.transport.loseConnection()
+                content = f"{self.login} покидает этот мир."
+                with ThreadPoolExecutor(max_workers=20) as pool:
+                    pool.map(send_message, self.factory.clients)
+                    return
 
             content = f"{self.login} said: {content}"
 
             self.update_history(content)
             if self.__debug:
                 print(content)
-
-            def send_message(user):
-                if user is not self and user.login is not None:
-                    user.sendLine(content.encode())
 
             with ThreadPoolExecutor(max_workers=20) as pool:
                 pool.map(send_message, self.factory.clients)
@@ -97,6 +106,11 @@ class ServerProtocol(LineOnlyReceiver):
                     self.sendLine(f"Welcome, {login}! Let's chat! ;)".encode())
                     self.send_history()
 
+                    content = f"{self.login} joined us!"
+                    with ThreadPoolExecutor(max_workers=20) as pool:
+                        pool.map(send_message, self.factory.clients)
+                        return
+
     def send_history(self):
         if len(self.factory.latest_messages) == 0:
             self.sendLine(f"{self.login}, there is no new messages for ya :|".encode())
@@ -111,7 +125,7 @@ class ServerProtocol(LineOnlyReceiver):
 
         self.factory.latest_messages.append(message)
 
-    def fix_my_first_line(self):
+    def fix_users_first_line_telnet_at_win(self):
         delimiter = self.delimiter
         self.delimiter = b""
         self.sendLine(">".encode())
@@ -138,7 +152,6 @@ class Server(ServerFactory):
     latest_messages: list = []
 
     def startFactory(self):
-        self.clients = []
         print("Server started")
 
     def stopFactory(self):
