@@ -1,7 +1,6 @@
 Для конвертации Qt `*.ui` файлов в исполняемый Python-код выполним команду:
 
 ```
-pyuic5 window.ui -o window.py
 pyuic5 design.ui -o design.py
 ```
 
