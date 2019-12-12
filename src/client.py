@@ -6,6 +6,7 @@
 #  Графический PyQt 5 клиент для работы с сервером чата
 import sys
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt
 from gui import design
 
 from twisted.internet.protocol import ClientFactory
@@ -45,6 +46,7 @@ class ChatWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
 
     def init_handlers(self):
         self.pushButton.clicked.connect(self.send_message)
+        self.lineEdit.returnPressed.connect(self.pushButton.click)
         #
 
     def closeEvent(self, event):
@@ -52,9 +54,16 @@ class ChatWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
 
     def send_message(self):
         message = self.lineEdit.text()
-        self.plainTextEdit.appendPlainText(message)
-        self.protocol.sendLine(message.encode())
-        self.lineEdit.clear()
+
+        if len(message) > 0:
+            self.plainTextEdit.appendPlainText('You said: ' + message)
+            self.protocol.sendLine(message.encode())
+            self.lineEdit.clear()
+            self.lineEdit.setFocus()
+
+    # def keyPressEvent(self, e):
+    #     if e.key() == Qt.Key_Enter or e.key() == Qt.Key_Return:
+    #         self.send_message()
 
 
 app = QtWidgets.QApplication(sys.argv)
