@@ -50,7 +50,12 @@ Windows: [инструкция](https://help.keenetic.com/hc/ru/articles/2139658
 
 ### Проблема при запуске client.py в PyCharm @ py3.8: ModuleNotFoundError: No module named 'win32event' (Windows)
 
-- Помогло установить в системный интерпретатор (глобально) пакет `pywin32` (через системную консоль, а не консоль в pyCharm), затем создать в проекте новый venv с опцией "Inherit global site-packages"
+- Вариант 1
+    - Помогло установить в системный интерпретатор (глобально) пакет `pywin32` (через системную консоль, а не консоль в pyCharm), затем создать в проекте новый venv с опцией "Inherit global site-packages"
+- Вариант 2 (https://monosnap.com/file/JXxBOGIz63GWzbgkYCqMCuvgHB5oF6) [thanks 2 Stas Nosov@tg]
+    - Нужен ракет pywin32
+    - PyCharm открываете "Settings" -> "Project: ..." -> "Project Interpreter".
+    - Прогузится список пакетов проекта, в правом верхнем углу жмём +, в строке поиска забиваем pywin32, жмём "Install Package"
     
 (за вклад спасибо [NickCoolii](https://github.com/NickCoolii))
 
