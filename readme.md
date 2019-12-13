@@ -48,6 +48,10 @@ Windows: [инструкция](https://help.keenetic.com/hc/ru/articles/2139658
     - Перезагрузить компьютер
     - Повторить установку пакетов `pip install -r requirements.txt`
 
+### Проблема при запуске client.py в PyCharm @ py3.8: ModuleNotFoundError: No module named 'win32event' (Windows)
+
+- Помогло установить в системный интерпретатор (глобально) пакет `pywin32` (через системную консоль, а не консоль в pyCharm), затем создать в проекте новый venv с опцией "Inherit global site-packages"
+    
 (за вклад спасибо [NickCoolii](https://github.com/NickCoolii))
 
 ## Структура репозитория
