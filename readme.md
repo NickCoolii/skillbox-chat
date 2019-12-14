@@ -59,6 +59,12 @@ Windows: [инструкция](https://help.keenetic.com/hc/ru/articles/2139658
     
 (за вклад спасибо [NickCoolii](https://github.com/NickCoolii))
 
+## Записи интенсива от skillbox @ youtube
+
+- День 1: https://www.youtube.com/watch?v=y_yCWpJ9yLM
+- День 2: https://www.youtube.com/watch?v=yms1G4541dc
+- День 3: https://www.youtube.com/watch?v=NfC8pUXAfBo
+
 ## Структура репозитория
 
 - **basic** - примеры кода с вебинаров
